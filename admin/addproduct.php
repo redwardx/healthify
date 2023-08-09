@@ -80,7 +80,7 @@ include('../connections/localhost.php'); //panggil database
         $query = "insert into products values('','$productname','$price','$category','$nama_img')";
         $hasil = mysqli_query($conn, $query);                   //jika berhasil memindahkan gambar, maka simpan nama dari gambar ke dalam database
         if($hasil){
-          header("location:products.php");                      //jika semua operasi berhasil, redirect tanpa alert
+          echo '<script language="javascript">alert("Tambah berhasil"); document.location="products.php";</script>';  //jika semua operasi berhasil, redirect tanpa alert
         }else{
           echo '<script language="javascript">alert("Penyimpanan gagal"); document.location="products.php";</script>'; //jika gagal, redirect dengan alert
         } 

@@ -45,7 +45,7 @@ include('../connections/localhost.php'); //panggil database
       $query = "insert into categories values('','$name','$desc')"; //menetapkan query untuk operasi ke database
       $hasil = mysqli_query($conn, $query); //mengeksekusi query dengan memanggil koneksi database dan variabel query yang telah ditetapkan
       if($hasil){
-        header("location:categories.php"); //jika berhasil, maka redirect
+        echo '<script language="javascript">alert("Tambah berhasil"); document.location="categories.php";</script>';
       }else{
         echo '<script language="javascript">alert("Penyimpanan gagal"); document.location="categories.php";</script>'; //jika gagal, maka akan muncul alert dan redirect
       }       
