@@ -36,7 +36,7 @@ include('../connections/localhost.php'); //panggil database
                     global $i; 
                       $i = 0; //dummy variabel untuk membuat nomor secara urut
                     while ($row = mysqli_fetch_array($result)) {
-                      $i = $i++ ;
+                      $i = ++$i ;
                   ?>
                   <tr>
                     <td><?php echo $i ?></td>
@@ -45,8 +45,8 @@ include('../connections/localhost.php'); //panggil database
                     <td align="center"><?php echo $row['price'] ?></td>
                     <td><?php echo date_format(new DateTime($row['date_added']), "Y-M-d H:i")  ?></td>
                   </tr>
+                  <?php  }	?>
                 </tbody>
-                <?php  }	?>
                 </table>
               </div>
             </div>
