@@ -1,39 +1,37 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])){
+//memeriksa apakah sudah memiliki sesi
+if(!isset($_SESSION['email'])){ //cek sesi apakah sudah login
 	echo '<script language="javascript">alert("Anda belum Login!"); document.location="index.php";</script>';
-}
-if(!isset($_SESSION['user'])){
+}								//jika belum, redirect
+if(!isset($_SESSION['user'])){  //cek sesi apakah bukan user
 	echo '<script language="javascript">alert("Anda bukan User!"); document.location="admin/index.php";</script>';
-}
-include("connections/localhost.php");
-if (!isset($_SESSION['email']) || !isset($_SESSION['totalCost']) || (int)$_SESSION['totalCost'] <= 0) {
-    //KICK USER OUT OF THIS PAGE
-    header('product.php');
-}
-global $name;
-$name = $_SESSION['name'];
+}								//jika bukan, redirect
 
+include("connections/localhost.php");
+
+global $name;
+$name = $_SESSION['name']; //mengambil data nama dari sesi
 
 global $totalCost;
-$totalCost = '';
-$totalCost = $_SESSION['totalCost'];
+$totalCost = $_SESSION['totalCost']; //mengambil data totalcost dari sesi
 
 ?>
 
+<!-- memanggil template dari folder include-->
 <?php include("includes/header.php"); ?>
-
-
 <?php include("includes/navbar.php"); ?>
+<!-------------------------------------------->
+
 <?php
-	$customeremail = mysqli_real_escape_string( $conn, $_SESSION[ 'email' ] );
-	$query = "SELECT * FROM `cart` INNER JOIN `products` ON cart.product_id = products.productID AND cart.customer_email = '$customeremail' ORDER BY `date_added` DESC";
+	$customeremail = mysqli_real_escape_string( $conn, $_SESSION[ 'email' ] ); //mendefinisikan variabel baru dengan mengambil data email dari session
+	$query = "SELECT * FROM `cart` INNER JOIN `products` ON cart.product_id = products.productID AND cart.customer_email = '$customeremail' ORDER BY `date_added` DESC"; //mendapatkan data dari tabel cart yang dimiliki oleh user dengan email yang sama dengan customer email
 	$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 
 	$qty =  mysqli_query($conn, "SELECT sum(quantity) as total FROM `cart` INNER JOIN `products` ON cart.product_id = products.productID AND cart.customer_email = '$customeremail' ORDER BY `date_added` DESC") or die(mysqli_error($conn));
+	//menjumlahkan total record dari quantity
 	$data=mysqli_fetch_assoc($qty);
-	
-	if ($data['total'] == 0) exit('<p align="center"> Your Cart is Empty</p>'); 
+
 ?>
     <div class="container mt-5">
         <h1 class="py-3">Checkout</h1>
@@ -71,7 +69,7 @@ $totalCost = $_SESSION['totalCost'];
                                 <th>Harga</th>
                             </tr>
                     <?php
-					    while ($row = mysqli_fetch_array($result)) {
+					    while ($row = mysqli_fetch_array($result)) { //mengambil data dari query result dan dijadikan array pada variabel row
 					?>
                             <tr>
                                 <td><?php echo $row['productname'] ?></td>
@@ -91,29 +89,29 @@ $totalCost = $_SESSION['totalCost'];
             </div>
         </form>
     </div>
-<script>
-    let textboxes = document.querySelectorAll('input[name="norek"]');
-    let label = document.querySelectorAll('label[name="norek"]');
+<!-----------Pengaturan untuk radio button------------>
+<script> 
+    let textboxes = document.querySelectorAll('input[name="norek"]'); //mendefinisikan input dengan nama "norek" kedalam variabel javascript
 
-    document.querySelectorAll('input[name=target]')
-    .forEach(function(radio) {
-        radio.addEventListener('change', function(e) {
-        let value = e.target.value;
+    document.querySelectorAll('input[name=target]').forEach(function(radio) { //mendefinisikan input radio dengan nama "target" kedalam variabel javascript
+        radio.addEventListener('change', function(e) {           //jika radio button berganti
+            let value = e.target.value;
 
-        if (value === 'tf') {
-            textboxes.forEach(function(textbox) {
-                textbox.hidden = false;
-                textbox.disabled = false;
-                textbox.required = true;
-            });
-        } else if (value === 'cod') {
-            textboxes.forEach(function(textbox) {
-                textbox.hidden = true;
-                textbox.disabled = true;
-                textbox.required = false;
-            });
-        }
+            if (value === 'tf') {                               //jika value radio bernilai "tf"
+                textboxes.forEach(function(textbox) {           //akan mempengaruhi input norek
+                    textbox.hidden = false;                     //input norek muncul
+                    textbox.disabled = false;                   //input norek dapat diisi
+                    textbox.required = true;                    //input norek harus diisi
+                });
+            } else if (value === 'cod') {                       //jika value radio bernilai "cod"
+                textboxes.forEach(function(textbox) {           //akan mempengaruhi input norek
+                    textbox.hidden = true;                      //input norek akan hilang
+                    textbox.disabled = true;                    //input norek tidak dapat diisi
+                    textbox.required = false;                   //input norek tidak wajib diisi
+                });
+            }
         });
     });
 </script>
+<!--------------------------------------------------->
 <?php include("includes/footer.php"); ?>

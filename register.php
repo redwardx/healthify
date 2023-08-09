@@ -1,65 +1,69 @@
 <?php
-ob_start();
 session_start();
-if (isset($_SESSION['email'])) {
-	echo "<script>alert('Anda sudah login') </script>";
-    if(isset($_SESSION['user'])){
-        echo "<script>open('dashboard.php', '_self') </script>";
-    } else {
-        echo "<script>open('admin/index.php', '_self') </script>";
-    }
-}
 include('connections/localhost.php');
 
 ?>
 
-
-<!doctype html>
-<html lang="en">
-
+<!-- memanggil template dari folder include-->
 <?php include("includes/header.php"); ?>
-
-<body>
-	<h1 class="h-auto" align="center">Create Account</h1>
-	<br>
-	<div class="form">
-		<form action="register.php" method="post" enctype="multipart/form-data">
-			<div align="center">
-				<label>Name</label>
-				<input name="name" type="text" height="30" placeholder="enter name" required>
-			</div>
-			<br>
-			<div align="center">
-				<label>Phone No.</label>
-				<input name="phone" type="text" maxlength="11" height="30" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="phone number" required>
-			</div>
-			<br>
-			<div align="center">
-				<label>Email</label>
-				<input name="email" type="email" height="30" maxlength="30" placeholder="enter email" required>
-			</div>
-			<br>
-			<div align="center">
-				<label>Create Password</label>
-				<input name="password" type="password" height="30" pattern=".{6,}" title="6 characters minimum" maxlength="30" placeholder="6 characters or more" required>
-			</div>
-			<br>
-			<div align="center">
-				<label>Confirm Password</label>
-				<input name="confirmPass" type="password" height="30" maxlength="30" pattern=".{6,}" title="6 characters minimum" placeholder="repeat password" required>
-			</div>
-			<br>
-			<div align="center">
-				<input class="button" name="register" type="submit" value="REGISTER">
-			</div>
-		</form>
-		<p>Already have an Account? <a href="index.php">Login here</a>
-		</p>
-	</div>
-
-	<div class="msg">
+<!-------------------------------------------->
+	<body class="bg-warning">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-body">
+										<form action="register.php" method="post" enctype="multipart/form-data">
+                                            <div class="form-floating mb-3">
+                                                <input class="form-control" name="name" type="text" placeholder="John Doe" />
+                                                <label for="inputEmail">Nama</label>
+                                            </div>
+											<div class="form-floating mb-3">
+                                                <input class="form-control" name="phone" type="text" placeholder="08XXXXXXXX" />
+                                                <label for="inputEmail">No. Telp</label>
+                                            </div>
+											<div class="form-floating mb-3">
+                                                <input class="form-control" name="email" type="email" placeholder="example@example.com" />
+                                                <label for="inputEmail">Email</label>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" name="password" type="password" placeholder="Create a password" />
+                                                        <label for="inputPassword">Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" name="confirmPass" type="password" placeholder="Confirm password" />
+                                                        <label for="inputPasswordConfirm">Confirm Password</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4 mb-0">
+												<div class="d-grid"><input class="btn btn-dark btn-block" name="register" type="submit" value="Buat Akun"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center py-3">
+                                        <div class="small">Sudah punya akun? <a href="index.php">Login</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
 		<?php
-		// this code below for when someone presses the REGISTER button
+		// proses register
 
 		/** sanitize input */
 		function cleanInput(string $data)
@@ -73,7 +77,7 @@ include('connections/localhost.php');
 
 		if (isset($_POST['register'])) {
 			global $conn;
-
+			//mengambil semua input pada form register
 			$name = mysqli_real_escape_string($conn, $_POST['name']);
 			$phone =  mysqli_real_escape_string($conn, $_POST['phone']);
 			$email =  mysqli_real_escape_string($conn, $_POST['email']);
@@ -85,41 +89,39 @@ include('connections/localhost.php');
 			$email = cleanInput($email);
 			$password = cleanInput($password);
 
+			//jika password tidak sama dengan repassword
 			if ($password !== $confirmPass) {
-				//this means passwords do not match
 				exit("Passwords do not match");
 			}
 
+			//memeriksa apakah email tersebut sudah ada
 			$s = "SELECT COUNT(*) from `user` where email= '$email'";
 			$result = mysqli_query($conn, $s);
 			$num = mysqli_fetch_row($result)[0];
-		
+			
+			//jika email sudah ada pada database
  			if ($num > 0) {
-				// this means the user already exists
-				exit("User already exists!");
+				//muncul alert dan kembali ke register
+				echo "<script>alert('Email sudah terdaftar!')</script>";
+				echo "<script>window.location.replace('register.php')</script>";
 			} else {
-				$hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-				$reg = "INSERT INTO `user`(`name`, `email`, `password`, `phone`,`level`, `datejoined`) 
-						VALUES ('$name','$email','$hashedpassword', '$phone', '0' ,NOW())";
+				//jika email belum ada pada database
+				$hashedpassword = password_hash($password, PASSWORD_DEFAULT); //untuk melakukan proses hash password
+				//proses input data user
+				$reg = "INSERT INTO `user`(`name`, `email`, `password`, `phone`,`level`, `datejoined`) VALUES ('$name','$email','$hashedpassword', '$phone', '0' ,NOW())";
 
 				if (mysqli_query($conn, $reg)) {
-					$_SESSION['valid'] = true;
-					$_SESSION['name'] = $name;
-					$_SESSION['email'] = $email;
-
-
-					echo '<p style="color: green"> Registration successful! Redirecting you... </p>';
-					//header('Refresh: 1; URL = myaccount.php');
+					//jika berhasil, redirect ke index dengan alert berhasil
+					echo "<script>alert('Daftar berhasil, silahkan login')</script>";
+					echo "<script>window.location.replace('index.php')</script>";
 				} else {
+					//jika berhasil, redirect ke index dengan alert berhasil
 					echo "Sign up failed" . mysqli_error($conn);
 				}
 			}
 		}
- 
 		?>
-	</div>
 
 	<?php include("includes/footer.php"); ?>
-</body>
 
 </html>

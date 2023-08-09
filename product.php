@@ -1,41 +1,48 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])){
+//memeriksa apakah sudah memiliki sesi
+if(!isset($_SESSION['email'])){ //cek sesi apakah sudah login
 	echo '<script language="javascript">alert("Anda belum Login!"); document.location="index.php";</script>';
-}
-if(!isset($_SESSION['user'])){
+}								//jika belum, redirect
+if(!isset($_SESSION['user'])){  //cek sesi apakah bukan user
 	echo '<script language="javascript">alert("Anda bukan User!"); document.location="admin/index.php";</script>';
-}
+}								//jika bukan, redirect
 include('connections/localhost.php');
 ?>
 
+<!-- memanggil template dari folder include-->
 <?php include("includes/header.php"); ?>
-
-
 <?php include("includes/navbar.php"); ?>
+<!-------------------------------------------->
 
 
 <div class="container py-5">
 	<h2 class="h-auto py-3">Produk dalam kategori <?php echo $_GET['category'] ?></h2>
 	<?php
 	global $conn;
+	//karena yang ditampilkan per kategori
 	if (!isset($_GET['category']) || empty(trim($_GET['category']))) {
+		//jika url kategori tidak memiliki parameter, kembali ke page kategori
 		header("location: categories.php");
 	} else {
-
+		//jika url kategori memiliki parameter
 		$category = htmlspecialchars(stripslashes(strip_tags($_GET['category'])));
 		$category = mysqli_real_escape_string($conn, $category);
 		
-		$_SESSION['category'] = $category; // for later use.
-
+		$_SESSION['category'] = $category; // mengambil parameter tersebut kedalam variabel
+		
+		//mencari produk dimana kategori produk sama dengan kategori parameter
 		$query = "SELECT * FROM `products` WHERE category = '$category'";
 		$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 
+		//memeriksa jumlah produk dalam kategori
 		$count = mysqli_num_rows($result);
+		//jika jumlahnya 0, maka
 		if ($count == 0) exit("Belum ada produk dalam kategori ini."); ?>
-		
+
 		<div class="container-grid">
 			<?php
+			//jika ada produk dalam kategori
 			while ($row = mysqli_fetch_array($result)) {
 			?>
 				<div class="card m-3" style="width: 18rem;">
@@ -47,7 +54,6 @@ include('connections/localhost.php');
 						<a href="addtocart.php?id=<?php echo $row['productID'] ?>" class="btn btn-primary">Add to Cart</a>
 					</div>
 				</div>
-				<!-- END OF single item box -->
 		<?php
 			}
 		}
@@ -55,17 +61,6 @@ include('connections/localhost.php');
 		</div>
 		</div>
 </div>
-
-
-		<script type="application/javascript">
-			function taketoLogin() {
-				//this JS takes someone to Login page if not logged in.
-				window.alert("Please login first!");
-				window.location.replace("login.php");
-			}
-		</script>
-</br>
-</br>
 	<?php include("includes/footer.php"); ?>
 </body>
 </html>

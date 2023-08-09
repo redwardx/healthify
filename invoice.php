@@ -1,5 +1,6 @@
 <?php
 session_start();
+//memeriksa apakah sudah memiliki sesi
 if(!isset($_SESSION['email'])){
 	echo '<script language="javascript">alert("Anda belum Login!"); document.location="index.php";</script>';
 }
@@ -40,7 +41,7 @@ $pdf->SetFont('Arial','B',14);
 $pdf->Cell(130 ,5,'Healthify Corp.',0,0);
 $pdf->Cell(59 ,5,'INVOICE',0,1);//end of line
 
-//set font to arial, regular, 12pt
+//mengatur font ke arial, regular, 12pt
 $pdf->SetFont('Arial','',12);
 
 $pdf->Cell(130 ,5,'Jalan Ahmad Yani',0,0);
@@ -53,13 +54,10 @@ $pdf->Cell(25 ,5,'Date',0,0);
 $pdf->Cell(34 ,5,date("d-m-Y"),0,1);//end of line
 
 
-//make a dummy empty cell as a vertical spacer
 $pdf->Cell(189 ,10,'',0,1);//end of line
 
-//billing address
 $pdf->Cell(100 ,5,'Info Tagihan',0,1);//end of line
 
-//add dummy cell at beginning of each line for indentation
 $pdf->Cell(5 ,5,'',0,0);
 $pdf->Cell(30 ,5,'Nama ',0,0);
 $pdf->Cell(60 ,5, $name,0,1);
@@ -77,10 +75,9 @@ if (isset($_POST['norek'])) {
     $pdf->Cell(90 ,5,'Cash On Delivery (COD)',0,1);
 }
 
-//make a dummy empty cell as a vertical spacer
 $pdf->Cell(189 ,10,'',0,1);//end of line
 
-//invoice contents
+//membuat tabel produk
 $pdf->SetFont('Arial','B',12);
 
 $pdf->Cell(130 ,5,'Nama Produk',1,0);
@@ -88,7 +85,7 @@ $pdf->Cell(25 ,5,'Qty.',1,0);
 $pdf->Cell(34 ,5,'Harga',1,1);//end of line
 
 
-//Numbers are right-aligned so we give 'R' after new line parameter
+//'R' untuk membuat align rata kanan
 $pdf->SetFont('Arial','',12);
 $query = "SELECT * FROM `cart` INNER JOIN `products` ON cart.product_id = products.productID AND cart.customer_email = '$customeremail' ORDER BY `date_added` DESC";
 $data = mysqli_query($conn,$query);

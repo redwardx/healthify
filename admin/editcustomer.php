@@ -64,7 +64,7 @@ while($data = mysqli_fetch_array($result))
       //----------------------------- Jika kolom password diisi ------------------------//
       if($_POST['password']){
         $password = mysqli_real_escape_string($conn, $_POST['password']); //mengambil nilai dari input password 
-        $hashedpassword = password_hash($password, PASSWORD_DEFAULT);     //untuk mengenkripsi nilai dari input password
+        $hashedpassword = password_hash($password, PASSWORD_DEFAULT);     //untuk melakukan hash dari input password
         $query="update user set name='$name', email ='$email', phone='$phone', password= '$hashedpassword' where userid='$id'"; //query berjalan dengan mengubah password
         $hasil = mysqli_query($conn, $query);
       //----------------------------- Jika kolom password kosong ------------------------//  

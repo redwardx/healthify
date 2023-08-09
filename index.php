@@ -1,20 +1,12 @@
 <?php
 session_start();
-if (isset($_SESSION['email'])) {
-	echo "<script>alert('Anda sudah login') </script>";
-    if(isset($_SESSION['user'])){
-        echo "<script>open('dashboard.php', '_self') </script>";
-    } else {
-        echo "<script>open('admin/index.php', '_self') </script>";
-    }
-}
-
 include('connections/localhost.php');
 
 ?>
 
-<?php include("includes/header.php");
-?>
+<!-- memanggil template dari folder include-->
+<?php include("includes/header.php"); ?>
+<!-------------------------------------------->
 
 <body class="bg-warning">
     <div id="layoutAuthentication">
@@ -50,15 +42,7 @@ include('connections/localhost.php');
                 </div>
             </main>
         </div>
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Healthify 2023</div>
-                    </div>
-                </div>
-            </footer>
-        </div>
+        <?php include("includes/footer.php"); ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
