@@ -25,6 +25,7 @@ include('connections/localhost.php');
     <link href="css/styles.css" rel="stylesheet" />
 	<link href="css/animate.css" rel="stylesheet" />
 	<link href="css/custom.css" rel="stylesheet" />
+    <link href="css/grid.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -56,6 +57,41 @@ include('connections/localhost.php');
             </div>
         </div>
     </header>
+    <div class="container mb-5">
+        <div class="main text-center mt-5">
+            <br>
+            <br>
+            <h1>Produk <span class="ffest">Terbaru</span></h1>
+        </div>          
+        <?php
+            global $conn;
+        
+            //mencari produk dimana kategori produk sama dengan kategori parameter
+            $query = "SELECT * FROM `products` ORDER BY `productID` DESC LIMIT 12";
+            $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+
+            $count = mysqli_num_rows($result);
+            //jika jumlahnya 0, maka
+            if ($count == 0) exit("Belum ada produk dalam kategori ini.");
+        ?> 
+        <div class="container mt-4 d-flex mb-5 container-grid">
+			<?php
+			while ($row = mysqli_fetch_array($result)) {
+			?>
+				<div class="cards bg-white m-3" style="width: 18rem;">
+					<!-- START OF single item box -->
+					<img src="<?php echo basename('uploads/') . "/" .  $row['product_image']; ?>" class="card-img-top" width="200" height="200">
+					<div class="card-body text-center p-4">
+						<h5 class="fw-bold"><?php echo $row['productname'] ?></h5>
+						<p><?php echo "Rp. " . $row['price'] ?></p>
+						<a href="addtocart.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-primary">Add to Cart</a>
+					</div>
+				</div>
+			<?php
+				}
+			?>
+		</div> 
+    </div>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
@@ -85,6 +121,12 @@ include('connections/localhost.php');
         );
         wow.init();
     </script>
-    <?php include("includes/footer.php"); ?>
+    <footer class="py-4 bg-dark mt-auto">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; Healthify 2023</div>
+        </div>
+    </div>
+</footer>
     </body>
 </html>

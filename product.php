@@ -54,11 +54,10 @@ include('connections/localhost.php');
 						<a href="addtocart.php?id=<?php echo $row['productID'] ?>" class="btn btn-primary">Add to Cart</a>
 					</div>
 				</div>
-		<?php
+			<?php
+				}
 			}
-		}
-		?>
-		</div>
+			?>
 		</div>
 </div>
 	<?php include("includes/footer.php"); ?>
