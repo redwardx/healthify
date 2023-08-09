@@ -42,8 +42,8 @@ include('../connections/localhost.php'); //panggil database
                     <td><?= $row['phone'] ?></td>
                     <td><?= $row['datejoined'] ?></td>
                     <td style="text-align: center;">
-                      <a href="editcustomer.php?customer=<?= $row['userid'] ?>"><button class="btn btn-secondary">Edit</button></a>
-                      <a href="deletecustomer.php?customer=<?= $row['userid'] ?>"><button onClick="return confirmDelete()" class="btn btn-danger">Delete</button></a>
+                      <a href="editcustomer.php?customer=<?= $row['userid'] ?>"class="btn btn-outline-secondary"><i class="fas fa-edit"></i></a>
+                      <a href="deletecustomer.php?customer=<?= $row['userid'] ?>"onClick="return confirmDelete()" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                     </td>
                   </tr>
                   <?php } ?>

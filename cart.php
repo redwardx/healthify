@@ -69,6 +69,7 @@ if(!isset($_SESSION['user'])){  //cek sesi apakah bukan user
 		</div>
 		<?php $_SESSION['totalCost'] = $totalCost; ?>
 </div>
+</div>
 <!-- memanggil template dari folder include-->
 	<?php include("includes/footer.php"); ?>
 <!-------------------------------------------->

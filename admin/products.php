@@ -20,7 +20,7 @@ include('../connections/localhost.php'); //panggil database
           ?>
           <div class="card mb-4">
             <div class="card-header d-flex justify-content-end">
-              <a href="addproduct.php" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+              <a href="addproduct.php" class="btn btn-outline-primary"><i class="fas fa-plus"></i> Add</a>
             </div>
             <div class="card-body">
               <table id="datatablesSimple">
@@ -43,8 +43,8 @@ include('../connections/localhost.php'); //panggil database
                     <td><?= $row['category'] ?></td>
                     <td><?= $row['price'] ?></td>
                     <td style="text-align: center;">
-                      <a href="editproduct.php?product=<?= $row['productID'] ?>"><button class="btn btn-secondary">Edit</button></a>
-                      <a href="deleteproduct.php?product=<?= $row['productID'] ?>"><button onClick="return confirmDelete()" class="btn btn-danger">Delete</button></a>
+                      <a href="editproduct.php?product=<?= $row['productID'] ?>"class="btn btn-outline-secondary"><i class="fas fa-edit"></i></a>
+                      <a href="deleteproduct.php?product=<?= $row['productID'] ?>"onClick="return confirmDelete()" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                     </td>
                   </tr>
                   <?php } ?>
