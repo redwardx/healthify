@@ -32,7 +32,7 @@ while($data = mysqli_fetch_array($result)) // mendefinisikan hasil array dari da
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
-                            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Nama Produk" maxlength="30" required value=<?php echo $name;?>>
+                            <input name="name" type="text" class="form-control" value="<?php echo $name;?>" required >
                             <!-- Mengambil value dari variabel name-->
                             <label for="floatingInput">Nama Kategori</label>
                         </div>
@@ -56,7 +56,7 @@ while($data = mysqli_fetch_array($result)) // mendefinisikan hasil array dari da
       $query = "update categories set name='$name', description ='$desc' where category_id='$id'"; //menetapkan query untuk operasi ke database
       $hasil = mysqli_query($conn, $query); //mengeksekusi query dengan memanggil koneksi database dan variabel query yang telah ditetapkan
       if($hasil){
-        header("location:categories.php"); //jika berhasil, maka redirect
+        echo '<script language="javascript">alert("Ubah berhasil"); document.location="categories.php";</script>';
       }else{
         echo '<script language="javascript">alert("Update gagal"); document.location="categories.php";</script>'; //jika gagal, maka akan muncul alert dan redirect
       }       

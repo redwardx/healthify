@@ -33,7 +33,7 @@ while($data = mysqli_fetch_array($result))
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
-                            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Nama" required value=<?php echo $name;?>>
+                            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Nama" required value="<?php echo $name;?>">
                             <label for="floatingInput">Nama</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -73,7 +73,7 @@ while($data = mysqli_fetch_array($result))
         $hasil = mysqli_query($conn, $query);
       }
       if($hasil){
-        header("location:customer.php");
+        echo '<script language="javascript">alert("Ubah berhasil"); document.location="customer.php";</script>';
       }else{
         echo '<script language="javascript">alert("Update gagal"); document.location="customer.php";</script>';
       } 
