@@ -8,14 +8,14 @@ if(!isset($_SESSION['admin'])){ //cek apakah sesi bukan admin
 } //jika bukan admin, redirect ke dashboard user
 include('../connections/localhost.php'); //panggil database
 
-$id=$_GET['categories']; //mendapatkan nilai dari id kategori sesuai url
+$id=$_GET['customer'];
 
-$query = "Delete From categories Where category_id='$id'"; //query untuk menghapus data
+$query = "Delete From user Where userid='$id'";
 $hasil = mysqli_query($conn,$query);
     if($hasil){
-        echo '<script language="javascript">alert("Hapus berhasil"); document.location="categories.php";</script>';
+        echo '<script language="javascript">alert("Hapus berhasil"); document.location="customer.php";</script>';
     }
     else{
-        echo '<script language="javascript">alert("Hapus data gagal"); document.location="categories.php";</script>';
+        echo '<script language="javascript">alert("Hapus data gagal"); document.location="customer.php";</script>';
     }
 ?>

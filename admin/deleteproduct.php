@@ -13,7 +13,7 @@ $id=$_GET['product'];
 $query = "Delete From products Where productID='$id'";
 $hasil = mysqli_query($conn,$query);
     if($hasil){
-        header("location:products.php");
+        echo '<script language="javascript">alert("Hapus berhasil"); document.location="products.php";</script>';
     }
     else{
         echo '<script language="javascript">alert("Hapus data gagal"); document.location="products.php";</script>';
