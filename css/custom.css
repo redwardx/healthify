@@ -1,0 +1,159 @@
+*{
+    font-family: 'Montserrat';
+}
+body {
+  background-color: orange;
+}
+.ffest{
+  font-weight: bold;
+}
+.navbar .navbar-nav .nav-link:hover {
+  color: orange;
+}
+.navbar .navbar-nav .nav-link {
+  color: rgb(255, 255, 255);
+  font-size: 1.1em;
+}
+@media only screen and (min-width: 992px) {
+  .navbar {
+    padding: 0;
+  }
+  .navbar .navbar-brand {
+    padding: 0 0.7em;
+  }
+  .navbar .navbar-nav .nav-link {
+    padding: 1em 0;
+  }
+  .navbar .navbar-nav .nav-item {
+    margin: 0 1em;
+  }
+}
+.navbar .navbar-nav .nav-item {
+  position: relative;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.navbar .navbar-nav .nav-item::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: orange;
+  transition: 0.5s;
+  width: 0%;
+  content: "";
+  height: 4px;
+}
+.navbar .navbar-nav .nav-item:hover::after {
+  width: 100%;
+}
+
+
+.navbar-default{
+  transition:500ms ease;
+  background:transparent;
+}
+.navbar-default.scrolled{
+  background:#000;
+}
+
+.bg-dark{
+  transition: 1s;
+}
+
+.btn-xl {
+  text-transform: uppercase;
+  padding: 1.5rem 3rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+header.masthead {
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(7rem + 72px);
+    padding-bottom: 7rem;
+    background-image: url("../assets/main.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+  header.masthead .masthead-content {
+    z-index: 1;
+    position: relative;
+  }
+  header.masthead .masthead-content .masthead-heading {
+    font-size: 4rem;
+  }
+  header.masthead .masthead-content .masthead-subheading {
+    font-size: 2rem;
+  }
+  @media (min-width: 992px) {
+    header.masthead {
+      padding-top: calc(10rem + 55px);
+      padding-bottom: 10rem;
+    }
+    header.masthead .masthead-content .masthead-heading {
+      font-size: 6rem;
+    }
+    header.masthead .masthead-content .masthead-subheading {
+      font-size: 4rem;
+    }
+  }
+  .heading{
+    font-size:20px;
+    font-weight:600;
+    color:rgb(189, 128, 16);
+}
+
+  .line1{
+    color:#000;
+    font-size:12px;
+
+  }
+   .line2{
+    color:#000;
+    font-size:12px;
+    
+  }
+   .line3{
+    color:#000;
+    font-size:12px;
+    
+  }
+  .cards{
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  .cards:hover{
+      box-shadow: 5px 6px 6px 2px #e9ecef;
+      transform: scale(1.1);
+  }
+  .type {
+    color:#0000;
+    background:
+      linear-gradient(-90deg,#000000 5px,#0000 0) 10px 0,
+      linear-gradient(#000000 0 0) 0 0;
+    background-size:calc(var(--n)*1ch) 200%;
+    -webkit-background-clip:padding-box,text;
+    background-clip:padding-box,text;
+    background-repeat:no-repeat;
+    animation: 
+     b .7s infinite steps(1),   
+     t calc(var(--n)*.2s) steps(var(--n)) forwards;
+  }
+  
+  @keyframes t{
+    from {background-size:0 200%}
+  }
+  @keyframes b{
+    50% {background-position:0 -100%,0 0}
+  }
