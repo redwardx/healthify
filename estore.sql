@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Agu 2023 pada 11.01
+-- Waktu pembuatan: 10 Agu 2023 pada 08.28
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -40,8 +40,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `customer_email`, `product_id`, `quantity`, `date_added`) VALUES
-(2, 'radja@radja.com', 2, 1, '2023-08-08 23:24:37'),
-(15, 'radjaae@radja.com', 7, 1, '2023-08-09 05:19:42');
+(2, 'radja@radja.com', 2, 1, '2023-08-08 23:24:37');
 
 -- --------------------------------------------------------
 
@@ -61,7 +60,8 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`category_id`, `category_name`, `description`) VALUES
 (1, 'Obat Anak', 'Obat yang dikhususkan kepada anak - anak'),
-(3, 'Jerigen', 'Untuk isi ulang oksigen');
+(3, 'Jerigen', 'Untuk isi ulang oksigen'),
+(4, 'Roti o', 'roti o enak');
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,9 @@ INSERT INTO `orders` (`order_id`, `product_id`, `quantity`, `address`, `bank`, `
 (8, 6, 2, 'JL GAJAHMADA 12', 0, 'radjaae@radja.com', '2023-08-09 02:34:51'),
 (9, 6, 1, 'jalan gajahmada', 398273192, 'radjaae@radja.com', '2023-08-09 02:35:41'),
 (10, 6, 1, 'ass', 0, 'radjaae@radja.com', '2023-08-09 05:18:46'),
-(11, 6, 1, 'rwew', 52312, 'radjaae@radja.com', '2023-08-09 05:19:29');
+(11, 6, 1, 'rwew', 52312, 'radjaae@radja.com', '2023-08-09 05:19:29'),
+(12, 4, 1, 'suprihome', 0, 'suprigans@gmail.com', '2023-08-09 22:52:29'),
+(13, 7, 2, 'gajahmada', 0, 'radjaae@radja.com', '2023-08-09 22:55:51');
 
 -- --------------------------------------------------------
 
@@ -112,7 +114,8 @@ INSERT INTO `products` (`productID`, `productname`, `price`, `category`, `produc
 (3, 'ERIGO', 320000, 'jacket', 'PROD_20230808125138987114.png'),
 (4, 'RUGNEK', 490000, 'Obat Anak', 'PROD_20230808012835232384.png'),
 (6, 'Antimo', 1500, 'Obat Anak', 'classdkpp.drawio.png'),
-(7, 'Tabung Gas', 50000, 'Jerigen', 'activitydkpp.drawio.png');
+(7, 'Tabung Gas', 50000, 'Jerigen', 'activitydkpp.drawio.png'),
+(8, 'subroto', 32400, 'roti a', 'prs.png');
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,9 @@ INSERT INTO `products` (`productID`, `productname`, `price`, `category`, `produc
 CREATE TABLE `user` (
   `userid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `birth` date NOT NULL,
   `email` varchar(100) NOT NULL,
+  `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   `level` enum('0','1') NOT NULL,
   `phone` varchar(15) NOT NULL,
@@ -135,9 +140,12 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`userid`, `name`, `email`, `password`, `level`, `phone`, `address`, `datejoined`) VALUES
-(1, 'Radja', 'radjaae@radja.com', '$2y$10$OQFH/l/7P0kvRzbfy5DHEecPtSLX7F4FrqI0oOcCdFDBOttUuUwSO', '0', '08972319423', NULL, '2023-08-06 23:27:26'),
-(3, 'adminn', 'admin@admin.com', '$2y$10$BbgxBBI5IJ/XDquUJrlEUuZ8akXNQy6LmUxGYXQET.YOL7NnwnN7C', '1', '0892417239', NULL, '2023-08-07 20:18:18');
+INSERT INTO `user` (`userid`, `name`, `birth`, `email`, `username`, `password`, `level`, `phone`, `address`, `datejoined`) VALUES
+(1, 'Radja', '2012-03-05', 'radjaae@radja.com', 'radjae', '$2y$10$OQFH/l/7P0kvRzbfy5DHEecPtSLX7F4FrqI0oOcCdFDBOttUuUwSO', '0', '08972319423', NULL, '2023-08-06 23:27:26'),
+(3, 'adminn', '0000-00-00', 'admin@admin.com', '', '$2y$10$BbgxBBI5IJ/XDquUJrlEUuZ8akXNQy6LmUxGYXQET.YOL7NnwnN7C', '1', '0892417239', NULL, '2023-08-07 20:18:18'),
+(4, 'Ujang', '0000-00-00', 'ujang@gmail.com', '', '$2y$10$bGml40UZK/DTMrAzmoGT7.yiNvhRSXh.jn7zEXlMdoxxjj0QJx00u', '0', '0897237128', NULL, '2023-08-09 18:43:42'),
+(5, 'Supri', '0000-00-00', 'suprigans@gmail.com', '', '$2y$10$/BAcvpANk1e3vMQzywiAiuYBNjjcLiko1RsM44s7/ylZKOOLyU3TW', '0', '0823197742', NULL, '2023-08-09 19:00:00'),
+(7, 'udin', '2006-01-01', 'udintzy@gmail.com', 'udintzy', '$2y$10$rwAJjnq4YKaE1.9i/yh8WOTS/eWvKDwKdC1GTQ1xMJO0bHruWGo7W', '0', '0897234123', 'jalan bratang', '2023-08-10 13:27:44');
 
 --
 -- Indexes for dumped tables
@@ -185,31 +193,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

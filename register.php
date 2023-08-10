@@ -20,16 +20,28 @@ include('connections/localhost.php');
 										<form action="register.php" method="post" enctype="multipart/form-data">
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" name="name" type="text" placeholder="John Doe" />
-                                                <label for="inputEmail">Nama</label>
+                                                <label>Nama</label>
+                                            </div>
+											<div class="form-floating mb-3">
+                                                <input class="form-control" name="username" type="text" placeholder="johndoe" />
+                                                <label>Username</label>
+                                            </div>
+											<div class="form-floating mb-3">
+                                                <input class="form-control" name="birth" type="date" placeholder="00-00-0000" />
+                                                <label>Tanggal Lahir</label>
                                             </div>
 											<div class="form-floating mb-3">
                                                 <input class="form-control" name="phone" type="text" placeholder="08XXXXXXXX" />
-                                                <label for="inputEmail">No. Telp</label>
+                                                <label>No. Telp</label>
                                             </div>
 											<div class="form-floating mb-3">
                                                 <input class="form-control" name="email" type="email" placeholder="example@example.com" />
-                                                <label for="inputEmail">Email</label>
+                                                <label>Email</label>
                                             </div>
+											<div class="form-floating mb-3">
+												<textarea name="address" class="form-control" placeholder="Alamat" id="floatingTextarea2" style="height: 100px"></textarea>
+												<label for="floatingTextarea2">Alamat</label>
+											</div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
@@ -79,14 +91,20 @@ include('connections/localhost.php');
 			global $conn;
 			//mengambil semua input pada form register
 			$name = mysqli_real_escape_string($conn, $_POST['name']);
+			$username = mysqli_real_escape_string($conn, $_POST['username']);
+			$birth = mysqli_real_escape_string($conn, $_POST['birth']);
 			$phone =  mysqli_real_escape_string($conn, $_POST['phone']);
 			$email =  mysqli_real_escape_string($conn, $_POST['email']);
+			$address = mysqli_real_escape_string($conn, $_POST['address']);
 			$password = mysqli_real_escape_string($conn, $_POST['password']);
 			$confirmPass = mysqli_real_escape_string($conn, $_POST['confirmPass']);
 
 			$name = cleanInput($name);
+			$username = cleanInput($username);
+			$birth = cleanInput($birth);
 			$phone = cleanInput($phone);
 			$email = cleanInput($email);
+			$address = cleanInput($address);
 			$password = cleanInput($password);
 
 			//jika password tidak sama dengan repassword
@@ -108,7 +126,7 @@ include('connections/localhost.php');
 				//jika email belum ada pada database
 				$hashedpassword = password_hash($password, PASSWORD_DEFAULT); //untuk melakukan proses hash password
 				//proses input data user
-				$reg = "INSERT INTO `user`(`name`, `email`, `password`, `phone`,`level`, `datejoined`) VALUES ('$name','$email','$hashedpassword', '$phone', '0' ,NOW())";
+				$reg = "INSERT INTO `user`(`name`, `birth`, `email`, `username`, `password`, `phone`, `address`, `level`, `datejoined`) VALUES ('$name', '$birth', '$email', '$username','$hashedpassword', '$phone', '$address', '0' ,NOW())";
 
 				if (mysqli_query($conn, $reg)) {
 					//jika berhasil, redirect ke index dengan alert berhasil
