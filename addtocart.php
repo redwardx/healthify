@@ -10,8 +10,6 @@ if(!isset($_SESSION['user'])){  //cek sesi apakah bukan user
 include('connections/localhost.php');
 global $conn;
 
-	$categoryName = $_SESSION['category']; // mengambil nama kategori berdasarkan url
-
 	$product_id = htmlspecialchars(stripslashes(trim($_GET['id']))); 
 	$product_id = mysqli_real_escape_string($conn, $product_id);
 	$customeremail = mysqli_real_escape_string($conn, $_SESSION['email']);
@@ -29,11 +27,11 @@ global $conn;
 		$query = "UPDATE `cart` SET `quantity` = `quantity` + 1 WHERE `customer_email` = '$customeremail' AND `product_id`='$product_id'";
 		$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 		echo "<script>alert('Berhasil ditambahkan ke keranjang')</script>";
-		echo "<script>window.location.replace('product.php?category=$categoryName')</script>";
+		echo "<script>window.history.back();</script>";
 	} else {
 		//jika belum, maka tambah data baru ke tabel cart
 		$query = "INSERT INTO `cart`( `customer_email`, `product_id`,  `quantity`, `date_added`) VALUES ('$customeremail','$product_id', 1 ,NOW())";
 		$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 		echo "<script>alert('Berhasil ditambahkan ke keranjang')</script>";
-		echo "<script>window.location.replace('product.php?category=$categoryName')</script>";
+		echo "<script>window.history.back();</script>";
 }
