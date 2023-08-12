@@ -33,7 +33,7 @@ $totalCost = $_SESSION['totalCost']; //mengambil data totalcost dari sesi
 	$data=mysqli_fetch_assoc($qty);
 
 ?>
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <h1 class="py-3">Checkout</h1>
         <form action="confirmorder.php" method="post">
             <div class="card">

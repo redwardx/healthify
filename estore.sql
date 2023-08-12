@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Agu 2023 pada 08.28
+-- Waktu pembuatan: 12 Agu 2023 pada 17.19
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -40,7 +40,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `customer_email`, `product_id`, `quantity`, `date_added`) VALUES
-(2, 'radja@radja.com', 2, 1, '2023-08-08 23:24:37');
+(2, 'radja@radja.com', 2, 1, '2023-08-08 23:24:37'),
+(35, 'radjaae@radja.com', 7, 1, '2023-08-12 22:18:43');
 
 -- --------------------------------------------------------
 
@@ -66,13 +67,43 @@ INSERT INTO `categories` (`category_id`, `category_name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `detail_orders`
+--
+
+CREATE TABLE `detail_orders` (
+  `detail_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `detail_orders`
+--
+
+INSERT INTO `detail_orders` (`detail_id`, `order_id`, `product_id`, `quantity`) VALUES
+(1, 18, 4, 1),
+(2, 19, 6, 1),
+(3, 20, 7, 1),
+(4, 21, 6, 1),
+(5, 22, 6, 1),
+(6, 23, 7, 1),
+(7, 24, 7, 1),
+(8, 25, 8, 1),
+(9, 26, 8, 1),
+(10, 26, 4, 1),
+(11, 27, 7, 1),
+(12, 27, 8, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `orders`
 --
 
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `total_bayar` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `bank` int(25) NOT NULL,
   `customer_email` varchar(100) NOT NULL,
@@ -83,13 +114,26 @@ CREATE TABLE `orders` (
 -- Dumping data untuk tabel `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `product_id`, `quantity`, `address`, `bank`, `customer_email`, `date_added`) VALUES
-(8, 6, 2, 'JL GAJAHMADA 12', 0, 'radjaae@radja.com', '2023-08-09 02:34:51'),
-(9, 6, 1, 'jalan gajahmada', 398273192, 'radjaae@radja.com', '2023-08-09 02:35:41'),
-(10, 6, 1, 'ass', 0, 'radjaae@radja.com', '2023-08-09 05:18:46'),
-(11, 6, 1, 'rwew', 52312, 'radjaae@radja.com', '2023-08-09 05:19:29'),
-(12, 4, 1, 'suprihome', 0, 'suprigans@gmail.com', '2023-08-09 22:52:29'),
-(13, 7, 2, 'gajahmada', 0, 'radjaae@radja.com', '2023-08-09 22:55:51');
+INSERT INTO `orders` (`order_id`, `total_bayar`, `address`, `bank`, `customer_email`, `date_added`) VALUES
+(8, 0, 'JL GAJAHMADA 12', 0, 'radjaae@radja.com', '2023-08-09 02:34:51'),
+(9, 0, 'jalan gajahmada', 398273192, 'radjaae@radja.com', '2023-08-09 02:35:41'),
+(10, 0, 'ass', 0, 'radjaae@radja.com', '2023-08-09 05:18:46'),
+(11, 0, 'rwew', 52312, 'radjaae@radja.com', '2023-08-09 05:19:29'),
+(12, 0, 'suprihome', 0, 'suprigans@gmail.com', '2023-08-09 22:52:29'),
+(13, 0, 'gajahmada', 0, 'radjaae@radja.com', '2023-08-09 22:55:51'),
+(14, 0, 'radja', 0, 'radjaae@radja.com', '2023-08-12 18:59:00'),
+(15, 0, 'radja', 0, 'radjaae@radja.com', '2023-08-12 18:59:00'),
+(16, 0, 'radja', 0, 'radjaae@radja.com', '2023-08-12 18:59:00'),
+(18, 0, 'jalan kaswari', 0, 'radjaae@radja.com', '2023-08-12 20:09:51'),
+(19, 0, 'jalan kaswari', 0, 'radjaae@radja.com', '2023-08-12 20:09:51'),
+(20, 0, 'bla', 0, 'radjaae@radja.com', '2023-08-12 20:35:13'),
+(21, 0, 'bla', 0, 'radjaae@radja.com', '2023-08-12 20:35:13'),
+(22, 0, 'pew', 0, 'radjaae@radja.com', '2023-08-12 20:47:35'),
+(23, 0, 'pew', 0, 'radjaae@radja.com', '2023-08-12 20:47:35'),
+(24, 0, 'kol', 0, 'radjaae@radja.com', '2023-08-12 20:53:25'),
+(25, 0, 'kol', 0, 'radjaae@radja.com', '2023-08-12 20:53:25'),
+(26, 0, 'pog', 0, 'radjaae@radja.com', '2023-08-12 20:59:15'),
+(27, 82400, 'jalan buntu', 0, 'radjaae@radja.com', '2023-08-12 22:15:32');
 
 -- --------------------------------------------------------
 
@@ -165,11 +209,18 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
+-- Indeks untuk tabel `detail_orders`
+--
+ALTER TABLE `detail_orders`
+  ADD PRIMARY KEY (`detail_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indeks untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `ORDER_PID` (`product_id`);
+  ADD PRIMARY KEY (`order_id`);
 
 --
 -- Indeks untuk tabel `products`
@@ -193,7 +244,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
@@ -202,10 +253,16 @@ ALTER TABLE `categories`
   MODIFY `category_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT untuk tabel `detail_orders`
+--
+ALTER TABLE `detail_orders`
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
@@ -230,10 +287,11 @@ ALTER TABLE `cart`
   ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`productID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `orders`
+-- Ketidakleluasaan untuk tabel `detail_orders`
 --
-ALTER TABLE `orders`
-  ADD CONSTRAINT `ORDER_PID` FOREIGN KEY (`product_id`) REFERENCES `products` (`productID`);
+ALTER TABLE `detail_orders`
+  ADD CONSTRAINT `detail_orders_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `detail_orders_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`productID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

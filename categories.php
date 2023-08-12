@@ -32,5 +32,4 @@ if(!isset($_SESSION['user'])){  //cek sesi apakah bukan user
 		?>
 	</div>
 </div>
-
 <?php include( "includes/footer.php" ); ?>

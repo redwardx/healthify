@@ -16,7 +16,7 @@ include('../connections/localhost.php'); //panggil database
           <div class="container-fluid px-4">
           <h1 class="mt-4">Pesanan</h1>
           <?php
-            $query = "SELECT * FROM `orders` INNER JOIN `products` ON orders.product_id = products.productID ORDER BY `date_added` DESC";
+            $query = "SELECT * FROM `orders` ORDER BY `date_added` DESC";
             $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
           ?>
           <div class="card mb-4">
@@ -26,9 +26,10 @@ include('../connections/localhost.php'); //panggil database
                   <tr>
                     <th scope="col">Order #</th>
                     <th scope="col">Customer</th>
-                    <th scope="col">Nama Produk</th>
                     <th scope="col">Jumlah Dibayarkan (Rp.)</th>
                     <th scope="col">Tanggal</th>
+                    <th scope="col">Alamat Pengiriman</th>
+                    <th scope="col">Detail Produk</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -41,9 +42,12 @@ include('../connections/localhost.php'); //panggil database
                   <tr>
                     <td><?php echo $i ?></td>
                     <td><?php echo $row['customer_email'] ?></td>
-                    <td><?php echo $row['productname'] ?></td>
-                    <td align="center"><?php echo $row['price'] ?></td>
+                    <td align="center">Rp. <?php echo $row['total_bayar'] ?></td>
                     <td><?php echo date_format(new DateTime($row['date_added']), "Y-M-d H:i")  ?></td>
+                    <td><?php echo $row['address'] ?></td>
+                    <td style="text-align: center;">
+                      <a href="orderdetail.php?order=<?= $row['order_id'] ?>"class="btn btn-outline-secondary"><i class="fas fa-eye"></i></a>
+                    </td>
                   </tr>
                   <?php  }	?>
                 </tbody>

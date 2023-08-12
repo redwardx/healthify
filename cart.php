@@ -14,7 +14,7 @@ if(!isset($_SESSION['user'])){  //cek sesi apakah bukan user
 <!-------------------------------------------->
 
 <div class="container py-5">
-	<h2 class="h-auto py-3">Keranjang</h2>
+	<h2 class="h-auto py-5">Keranjang</h2>
 	<?php
 	
 	$customeremail = mysqli_real_escape_string( $conn, $_SESSION[ 'email' ] ); //mendefinisikan variabel baru dengan mengambil data email dari session

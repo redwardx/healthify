@@ -14,43 +14,67 @@ global $conn;
 $customeremail = mysqli_real_escape_string($conn, $_SESSION['email']);
 $totalCost = mysqli_real_escape_string($conn, $_SESSION['totalCost']);
 
-//mengambil semua data dari cart 
-$selectQuery = "SELECT * FROM `cart` WHERE `customer_email` = '$customeremail'";
+if(!isset($_POST['norek'])){
+	$address = $_POST['address'];
 
-$result = mysqli_query($conn, $selectQuery) or die("Database error " . mysqli_error($conn));
+    // Insert data ke tabel orders
+    $query = "INSERT INTO `orders`(`total_bayar`, `address`, `customer_email`, `date_added`) VALUES ('$totalCost', '$address', '$customeremail', NOW())";
 
-//jika data dari cart sudah diambil
-while ($row = mysqli_fetch_array($result)) {
-	//memeriksa apakah user menggunakan cod atau bank
-	if(!isset($_POST['norek'])){
-		//jika menggunakan cod, maka akan mengambil 3 input
-		$product_ID = $row['product_id'];
-		$quantity = $row['quantity'];
-		$address = $_POST['address'];
+    if (mysqli_query($conn, $query)) {
+        $order_id = mysqli_insert_id($conn); // Ambil order_id dari data yang baru disimpan
+        
+        // Ambil data dari cart
+        $selectQuery = "SELECT * FROM `cart` WHERE `customer_email` = '$customeremail'";
+        $result = mysqli_query($conn, $selectQuery) or die("Database error " . mysqli_error($conn));
 
-		//melakukan operasi insert data ke orders, karena bank tidak diisi, maka pada database akan bernilai default 0
-		$query = "INSERT INTO `orders`( `product_id`, `quantity`, `address`, `customer_email`, `date_added`) VALUES ('$product_ID', '$quantity', '$address', '$customeremail', NOW())";
-		mysqli_query($conn, $query) or die("Error" . mysqli_error($conn));
-	} else {
-		//jika menggunakan bank, maka akan mengambil 4 input
-		$product_ID = $row['product_id'];
-		$quantity = $row['quantity'];
-		$address = $_POST['address'];
-		$bank = $_POST['norek'];
+        // Loop untuk menyimpan detail pesanan
+        while ($row = mysqli_fetch_array($result)) {
+            $product_ID = $row['product_id'];
+            $quantity = $row['quantity'];
+            
+            $querydetail = "INSERT INTO detail_orders (`product_id`, `quantity`, `order_id`) VALUES ('$product_ID', '$quantity', $order_id)";
+            mysqli_query($conn, $querydetail);
+        }
+        
+        // Hapus data dari cart
+        $deletequery = "DELETE FROM `cart` WHERE `customer_email` = '$customeremail'";
+        mysqli_query($conn, $deletequery) or die("error two: " . mysqli_error($conn));
+        
+        // Setelah operasi selesai, redirect ke dashboard
+        unset($_SESSION['totalCost']);
+        echo "<script>alert('Pesanan anda sudah diproses')</script>";
+        echo "<script>window.location.replace('dashboard.php')</script>";
+    }
+} else {
+	$address = $_POST['address'];
+    $bank = $_POST['norek'];
 
-		//melakukan operasi insert data ke orders
-		$query = "INSERT INTO `orders`( `product_id`, `quantity`, `address`, `bank`, `customer_email`, `date_added`) VALUES ('$product_ID', '$quantity', '$address', '$bank', '$customeremail', NOW())";
-		mysqli_query($conn, $query) or die("Error" . mysqli_error($conn));
-	}
-}
+    // Insert data ke tabel orders
+    $query = "INSERT INTO `orders`(`total_bayar`, `address`, `bank`, `customer_email`, `date_added`) VALUES ('$totalCost', '$address', '$bank', '$customeremail', NOW())";
 
-//jika operasi insert data ke orders berhasil
-if (!mysqli_errno($conn)) {
-	//membersihkan cart untuk customer tersebut menggunakan query dibawah
-	$deletequery = "DELETE FROM `cart` WHERE `customer_email` = '$customeremail'";
-	mysqli_query($conn, $deletequery) or die("error two: " . mysqli_error($conn));
-	//setelah itu, hapus sesi untuk totalcost dan redirect ke dashboard
-	unset($_SESSION['totalCost']);
-	echo "<script>alert('Pesanan anda sudah diproses')</script>";
-	echo "<script>window.location.replace('dashboard.php')</script>";
+    if (mysqli_query($conn, $query)) {
+        $order_id = mysqli_insert_id($conn); // Ambil order_id dari data yang baru disimpan
+        
+        // Ambil data dari cart
+        $selectQuery = "SELECT * FROM `cart` WHERE `customer_email` = '$customeremail'";
+        $result = mysqli_query($conn, $selectQuery) or die("Database error " . mysqli_error($conn));
+
+        // Loop untuk menyimpan detail pesanan
+        while ($row = mysqli_fetch_array($result)) {
+            $product_ID = $row['product_id'];
+            $quantity = $row['quantity'];
+            
+            $querydetail = "INSERT INTO detail_orders (`product_id`, `quantity`, `order_id`) VALUES ('$product_ID', '$quantity', $order_id)";
+            mysqli_query($conn, $querydetail);
+        }
+        
+        // Hapus data dari cart
+        $deletequery = "DELETE FROM `cart` WHERE `customer_email` = '$customeremail'";
+        mysqli_query($conn, $deletequery) or die("error two: " . mysqli_error($conn));
+        
+        // Setelah operasi selesai, redirect ke dashboard
+        unset($_SESSION['totalCost']);
+        echo "<script>alert('Pesanan anda sudah diproses')</script>";
+        echo "<script>window.location.replace('dashboard.php')</script>";
+    }
 }

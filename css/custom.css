@@ -3,6 +3,7 @@
 }
 body {
   background-color: orange;
+  overflow-x: hidden;
 }
 .ffest{
   font-weight: bold;
@@ -90,9 +91,11 @@ header.masthead {
   }
   header.masthead .masthead-content .masthead-heading {
     font-size: 4rem;
+    overflow: hidden;
   }
   header.masthead .masthead-content .masthead-subheading {
     font-size: 2rem;
+    overflow: hidden;
   }
   @media (min-width: 992px) {
     header.masthead {
