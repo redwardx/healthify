@@ -84,7 +84,7 @@ include('connections/localhost.php');
 					<div class="card-body text-center p-4">
 						<h5 class="fw-bold"><?php echo $row['productname'] ?></h5>
 						<p><?php echo "Rp. " . $row['price'] ?></p>
-						<a href="addtocart.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-primary">Add to Cart</a>
+						<a href="productview.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-primary">Detail Produk</a>
 					</div>
 				</div>
 			<?php

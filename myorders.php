@@ -21,7 +21,7 @@ include('connections/localhost.php');
 	
 	$customeremail = mysqli_real_escape_string( $conn, $_SESSION[ 'email' ] ); //mengambil email
 	//mengambil data orders yang dimiliki oleh customer
-	$query = "SELECT * FROM `orders` INNER JOIN `products` ON orders.product_id = products.productID AND orders.customer_email = '$customeremail' ORDER BY `date_added` DESC";
+	$query = "SELECT * FROM `orders` INNER JOIN `detail_orders` ON orders.order_id = detail_orders.order_id INNER JOIN `products` ON detail_orders.product_id = products.productID AND orders.customer_email = '$customeremail' ORDER BY `date_added` DESC";
 	$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 	//menghitung jumlah orders
 	$count = mysqli_num_rows($result);
@@ -51,6 +51,5 @@ include('connections/localhost.php');
 		<hr>
 </br>
 </br>
+		</div>
 	<?php include("includes/footer.php"); ?>
-</body>
-</html>

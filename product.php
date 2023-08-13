@@ -51,7 +51,7 @@ include('connections/localhost.php');
 					<div class="card-body">
 						<h5 class="card-title"><?php echo "Rp. " . $row['price'] ?></h5>
 						<p class="card-text"><?php echo $row['productname'] ?></p>
-						<a href="addtocart.php?id=<?php echo $row['productID'] ?>" class="btn btn-primary">Add to Cart</a>
+						<a href="productview.php?id=<?php echo $row['productID'] ?>" class="btn btn-primary">Detail Produk</a>
 					</div>
 				</div>
 			<?php
@@ -61,5 +61,3 @@ include('connections/localhost.php');
 		</div>
 </div>
 	<?php include("includes/footer.php"); ?>
-</body>
-</html>

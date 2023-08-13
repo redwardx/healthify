@@ -24,7 +24,9 @@ global $conn;
 	//jika produk sudah masuk cart
 	if ($count > 0) {
 		//tambahkan 1 quantity pada produk tersebut
-		$query = "UPDATE `cart` SET `quantity` = `quantity` + 1 WHERE `customer_email` = '$customeremail' AND `product_id`='$product_id'";
+		$qty = htmlspecialchars(stripslashes(trim($_POST['quantity']))); 
+
+		$query = "UPDATE `cart` SET `quantity` = `quantity` + '$qty' WHERE `customer_email` = '$customeremail' AND `product_id`='$product_id'";
 		$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 		echo "<script>alert('Berhasil ditambahkan ke keranjang')</script>";
 		echo "<script>window.history.back();</script>";
