@@ -24,6 +24,10 @@ include('../connections/localhost.php'); //panggil database
                             <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Nama Produk" maxlength="30" required>
                             <label for="floatingInput">Nama Produk</label>
                         </div>
+                        <div class="form-floating mb-3">
+                            <textarea name="desc" class="form-control" placeholder="Deskripsi" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Deskripsi</label>
+                        </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Rp.</span>
                             <div class="form-floating">
@@ -66,6 +70,7 @@ include('../connections/localhost.php'); //panggil database
     if (isset($_POST['insert'])) {
 
       $productname = mysqli_real_escape_string($conn, $_POST['name']);
+      $desc = mysqli_real_escape_string($conn, $_POST['desc']);
       $price = mysqli_real_escape_string($conn, $_POST['price']);
       $category = mysqli_real_escape_string($conn, $_POST['category']);
 
@@ -77,7 +82,7 @@ include('../connections/localhost.php'); //panggil database
 
       $pindah = move_uploaded_file($sumber, $target.$nama_img); //memindahkan gambar dari temporary ke penyimpanan utama, yaitu target
       if($pindah){                                              
-        $query = "insert into products values('','$productname','$price','$category','$nama_img')";
+        $query = "insert into products values('','$productname','$desc','$price','$category','$nama_img')";
         $hasil = mysqli_query($conn, $query);                   //jika berhasil memindahkan gambar, maka simpan nama dari gambar ke dalam database
         if($hasil){
           echo '<script language="javascript">alert("Tambah berhasil"); document.location="products.php";</script>';  //jika semua operasi berhasil, redirect tanpa alert

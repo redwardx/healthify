@@ -16,6 +16,7 @@ while($data = mysqli_fetch_array($result))
 {
     $id = $data['productID'];
     $name = $data['productname'];
+    $desc = $data['description'];
     $price = $data['price'];
     $category = $data['category'];
 }
@@ -36,6 +37,11 @@ while($data = mysqli_fetch_array($result))
                             <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Nama Produk" maxlength="30" required value="<?php echo $name;?>">
                             <label for="floatingInput">Nama Produk</label>
                         </div>
+                        <div class="form-floating mb-3">
+                            <textarea name="desc" class="form-control" placeholder="Deskripsi" id="floatingTextarea2" style="height: 100px"><?php echo htmlspecialchars($desc); ?></textarea>
+                            <!-- Mengambil value dari variabel desc-->
+                            <label for="floatingTextarea2">Deskripsi</label>
+                        </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Rp.</span>
                             <div class="form-floating">
@@ -45,7 +51,7 @@ while($data = mysqli_fetch_array($result))
                         </div>
                         <div class="form-floating mb-3">
                             <select name="category" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option disabled selected>Pilih Kategori</option>
+                                <option value="<?php echo htmlspecialchars($category); ?>" selected><?php echo htmlspecialchars($category); ?></option>
                                 <?php 
                                   global $conn;
                                   $sql=mysqli_query($conn,"SELECT * FROM categories");
@@ -78,6 +84,7 @@ while($data = mysqli_fetch_array($result))
     if (isset($_POST['update'])) {
 
       $productname = mysqli_real_escape_string($conn, $_POST['name']);
+      $desc = mysqli_real_escape_string($conn, $_POST['desc']);
       $price = mysqli_real_escape_string($conn, $_POST['price']);
       $category = mysqli_real_escape_string($conn, $_POST['category']);
 
@@ -90,10 +97,10 @@ while($data = mysqli_fetch_array($result))
       $pindah = move_uploaded_file($sumber, $target.$nama_img);
       if($sumber != ""){              //jika input gambar tidak kosong
         $pindah;                      
-        $query="update products set productname='$name', price ='$price', category='$category', product_image= '$nama_img' where productID='$id'"; //update beserta nama gambar pada database
+        $query="update products set productname='$name', description='$desc', price ='$price', category='$category', product_image= '$nama_img' where productID='$id'"; //update beserta nama gambar pada database
         $hasil = mysqli_query($conn, $query);
       } else {                        //jika input gambar kosong
-        $query="update products set productname= '$name', price = '$price', category='$category' where productID='$id'"; //update tanpa menyertakan kolom nama gambar
+        $query="update products set productname= '$name',  description='$desc', price = '$price', category='$category' where productID='$id'"; //update tanpa menyertakan kolom nama gambar
         $hasil = mysqli_query($conn, $query);
       }
       if($hasil){
