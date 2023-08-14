@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Agu 2023 pada 17.19
+-- Waktu pembuatan: 14 Agu 2023 pada 09.27
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -41,7 +41,8 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`cart_id`, `customer_email`, `product_id`, `quantity`, `date_added`) VALUES
 (2, 'radja@radja.com', 2, 1, '2023-08-08 23:24:37'),
-(35, 'radjaae@radja.com', 7, 1, '2023-08-12 22:18:43');
+(35, 'radjaae@radja.com', 7, 1, '2023-08-12 22:18:43'),
+(36, 'radjaae@radja.com', 2, 3, '2023-08-13 21:23:58');
 
 -- --------------------------------------------------------
 
@@ -144,6 +145,7 @@ INSERT INTO `orders` (`order_id`, `total_bayar`, `address`, `bank`, `customer_em
 CREATE TABLE `products` (
   `productID` int(11) NOT NULL,
   `productname` varchar(100) NOT NULL,
+  `description` text NOT NULL,
   `price` int(11) NOT NULL,
   `category` varchar(100) NOT NULL,
   `product_image` varchar(100) NOT NULL
@@ -153,13 +155,13 @@ CREATE TABLE `products` (
 -- Dumping data untuk tabel `products`
 --
 
-INSERT INTO `products` (`productID`, `productname`, `price`, `category`, `product_image`) VALUES
-(2, 'CELANA BOTOL', 1222, 'pants', 'PROD_20230807123156760615.png'),
-(3, 'ERIGO', 320000, 'jacket', 'PROD_20230808125138987114.png'),
-(4, 'RUGNEK', 490000, 'Obat Anak', 'PROD_20230808012835232384.png'),
-(6, 'Antimo', 1500, 'Obat Anak', 'classdkpp.drawio.png'),
-(7, 'Tabung Gas', 50000, 'Jerigen', 'activitydkpp.drawio.png'),
-(8, 'subroto', 32400, 'roti a', 'prs.png');
+INSERT INTO `products` (`productID`, `productname`, `description`, `price`, `category`, `product_image`) VALUES
+(2, 'CELANA BOTOL', 'celana rusak', 1222, 'Obat Anak', 'PROD_20230807123156760615.png'),
+(3, 'ERIGO', 'baju butut', 320000, 'Roti o', 'PROD_20230808125138987114.png'),
+(4, 'RUGNEK', '', 490000, 'Obat Anak', 'PROD_20230808012835232384.png'),
+(6, 'Antimo', '', 1500, 'Obat Anak', 'classdkpp.drawio.png'),
+(7, 'Tabung Gas', '', 50000, 'Jerigen', 'activitydkpp.drawio.png'),
+(8, 'subroto', '', 32400, 'roti a', 'prs.png');
 
 -- --------------------------------------------------------
 
@@ -244,7 +246,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
